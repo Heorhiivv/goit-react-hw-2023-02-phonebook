@@ -30,6 +30,11 @@ class App extends Component {
           return { contacts: [...prevState.contacts, newContact] }
         })
   }
+  removeContact = (contactId) => {
+    const { contacts } = this.state
+    const contactsToRender = contacts.filter((contact) => contact.id !== contactId)
+    this.setState({ contacts: contactsToRender })
+  }
 
   render() {
     const { contacts, filter } = this.state
@@ -43,7 +48,9 @@ class App extends Component {
 
         <Section title="Contacts">
           <Filter onChange={this.onFilterChange} value={filter} />
-          {contacts.length > 0 && <ContactsList contacts={filteredResults} />}
+          {contacts.length > 0 && (
+            <ContactsList contacts={filteredResults} removeContact={this.removeContact} />
+          )}
         </Section>
       </>
     )
